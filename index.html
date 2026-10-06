@@ -28,7 +28,7 @@ h1{font-size:clamp(27px,5vw,44px);margin:7px 0;background:linear-gradient(90deg,
 .ans{min-height:62px;border-radius:16px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;padding:12px;font-size:17px;font-weight:800;cursor:pointer}.ans:hover{background:#ffffff20}
 .correct{background:#16a34a!important;border-color:#86efac!important;box-shadow:0 0 26px #22c55e99}.wrong{background:#dc2626!important;border-color:#fca5a5!important;box-shadow:0 0 24px #ef444488}
 .feedback{min-height:38px;padding-top:14px;font-size:18px;font-weight:900}.next,.restart{min-height:48px;border:0;border-radius:15px;padding:11px 24px;font-weight:900;font-size:16px;cursor:pointer;margin-top:9px}
-.next{background:linear-gradient(90deg,#fbbf24,#f97316);color:#291300}.restart{background:#ffffff1f;color:#fff;border:1px solid #fff}.hidden{display:none!important}
+.next{background:linear-gradient(90deg,#fbbf24,#f97316);color:#291300}.finishNow{min-height:48px;border:1px solid #fca5a5;border-radius:15px;padding:11px 24px;font-weight:900;font-size:16px;cursor:pointer;margin-top:9px;background:linear-gradient(90deg,#dc2626,#991b1b);color:#fff;box-shadow:0 0 18px #ef444455}.restart{background:#ffffff1f;color:#fff;border:1px solid #fff}.hidden{display:none!important}
 .winner{position:relative;overflow:hidden;margin-top:16px;background:radial-gradient(circle,#4a2775,#0a1230 60%,#030612);border:2px solid #fde68a}.winnerIcon{font-size:85px}.winner h2{color:#fde68a;font-size:32px}.winnerText{font-size:23px;font-weight:900}.launch{font-size:82px;display:inline-block;animation:launch 1.15s ease-in-out infinite alternate;filter:drop-shadow(0 0 15px #fff)}@keyframes launch{from{transform:translate(-45px,24px) rotate(-35deg)}to{transform:translate(55px,-34px) rotate(-35deg)}}.ranking{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin-top:15px}.rankCard{background:#ffffff10;border:1px solid #ffffff32;border-radius:15px;padding:10px}.rankCard b{color:#fde68a}
 .piece{position:absolute;top:-25px;width:10px;height:18px;animation:fall 2.8s linear forwards}@keyframes fall{to{transform:translateY(520px) rotate(720deg);opacity:.8}}
 .footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:18px}
@@ -52,12 +52,14 @@ h1{font-size:clamp(27px,5vw,44px);margin:7px 0;background:linear-gradient(90deg,
 <div id="turnText" class="turnText"></div>
 <div class="hint">🧑‍🚀 يختار الفريق محطة واحدة فقط — قيمة السؤال ظاهرة، ومستوى التفكير مخفي</div>
 <div id="stations" class="stations"></div>
+<button id="finishChooser" class="finishNow">🏆 إنهاء المسابقة وإعلان الفائز</button>
 </section>
 
 <section id="questionBox" class="panel questionBox hidden">
 <div id="qPlanet" class="qPlanet"></div><div id="qtitle" class="qtitle"></div><div id="level" class="level hidden"></div>
 <div id="q" class="q"></div><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div>
 <button id="continue" class="next hidden">العودة إلى خريطة المجرة 🚀</button>
+<button id="finishQuestion" class="finishNow">🏆 إنهاء المسابقة الآن</button>
 </section>
 
 <section id="winner" class="panel winner hidden">
@@ -101,11 +103,17 @@ function answer(b,j){
  if(j===s.c){b.classList.add('correct');scores[turn]=s.points;$('#feedback').textContent='🟢 إجابة صحيحة! +'+s.points+' نقطة 🚀👏';clap();}
  else{b.classList.add('wrong');bs[s.c].classList.add('correct');$('#feedback').textContent='🔴 إجابة غير صحيحة — ظهرت الإجابة الصحيحة باللون الأخضر.'}
  document.querySelectorAll('.sc')[turn].textContent=scores[turn] ? scores[turn]+' نقطة' : '0 نقطة';
- $('#continue').textContent=turn===4?'🏆 إعلان الفريق الفائز':'🚀 العودة إلى خريطة المجرة';$('#continue').classList.remove('hidden');
+ $('#continue').textContent=used.every(Boolean)?'🏆 إعلان الفريق الفائز':'🚀 العودة إلى خريطة المجرة';$('#continue').classList.remove('hidden');
 }
-$('#continue').onclick=()=>{if(turn===4)finish();else{turn++;$('#questionBox').classList.add('hidden');$('#chooser').classList.remove('hidden');renderChooser();}};
+$('#continue').onclick=()=>{
+ if(used.every(Boolean)){finish();return;}
+ turn=(turn+1)%teams.length;
+ $('#questionBox').classList.add('hidden');$('#chooser').classList.remove('hidden');renderChooser();
+};
+$('#finishChooser').onclick=finish;
+$('#finishQuestion').onclick=finish;
 function finish(){
- $('#questionBox').classList.add('hidden');$('#winner').classList.remove('hidden');document.querySelectorAll('.team').forEach(x=>x.classList.remove('turn'));
+ $('#questionBox').classList.add('hidden');$('#chooser').classList.add('hidden');$('#winner').classList.remove('hidden');document.querySelectorAll('.team').forEach(x=>x.classList.remove('turn'));
  const mx=Math.max(...scores),w=scores.map((v,k)=>v===mx?k:-1).filter(k=>k>=0);
  $('#winnerText').innerHTML=mx===0?'🚀 تحتاج الفرق إلى رحلة استكشاف جديدة!':w.length===1?'🏆 انطلق بسرعة الصاروخ نحو الصدارة!<br>'+teams[w[0]]+' — '+mx+' نقطة':'🚀 انطلاق مشترك نحو الصدارة!<br>'+w.map(k=>teams[k]).join(' • ')+' — '+mx+' نقطة';
  const rows=teams.map((name,k)=>({name,score:scores[k]})).sort((a,b)=>b.score-a.score);
