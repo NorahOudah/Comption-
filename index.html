@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تحدي المجرة | تدرج نصف القطر الذري</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#020617;color:#fff}
+.space{min-height:100vh;padding:22px;background:
+radial-gradient(circle at 12% 12%,#51256f 0,transparent 26%),
+radial-gradient(circle at 88% 20%,#0d4975 0,transparent 27%),
+radial-gradient(circle at 55% 92%,#35134f 0,transparent 32%),
+linear-gradient(145deg,#02040f,#07132f 52%,#160927);position:relative;overflow:hidden}
+.stars{position:absolute;inset:0;pointer-events:none;opacity:.42;background-image:radial-gradient(#fff 1px,transparent 1px),radial-gradient(#fff 1.2px,transparent 1.2px);background-size:27px 27px,61px 61px;background-position:0 0,17px 23px;animation:starMove 20s linear infinite}
+@keyframes starMove{to{background-position:100px 150px,150px 200px}}
+.wrap{max-width:980px;margin:auto;position:relative;z-index:2}.hero{text-align:center;margin-bottom:18px}.icons{font-size:38px;letter-spacing:8px}
+h1{font-size:clamp(27px,5vw,44px);margin:7px 0;background:linear-gradient(90deg,#fff,#fde68a,#bfdbfe,#fff);-webkit-background-clip:text;color:transparent}
+.sub{color:#dbeafe;line-height:1.8}.teams,.stations{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:16px 0}
+.team{border-radius:18px;padding:11px 4px;text-align:center;border:2px solid #ffffff38;transition:.2s}.team.turn{transform:translateY(-5px);border-color:#fff;box-shadow:0 0 24px #ffffff70}.obj{font-size:31px;display:block}.nm{font-size:13px;font-weight:bold;display:block}.sc{font-size:18px}
+.yellow{background:linear-gradient(150deg,#fde047,#a16207);color:#241800}.blue{background:linear-gradient(150deg,#3b82f6,#172554)}.green{background:linear-gradient(150deg,#22c55e,#064e3b)}.purple{background:linear-gradient(150deg,#a855f7,#3b0764)}.red{background:linear-gradient(150deg,#ef4444,#7f1d1d)}
+.panel{background:#050d28c9;border:1px solid #ffffff32;border-radius:24px;padding:20px;text-align:center;backdrop-filter:blur(8px)}
+.turnText{font-size:21px;font-weight:900;color:#fde68a}.hint{color:#bfdbfe;margin:6px 0 15px}
+.station{min-height:150px;border-radius:22px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;padding:12px 5px;font-weight:900;cursor:pointer;transition:.2s}
+.station:hover{transform:translateY(-6px);background:#ffffff22;box-shadow:0 0 25px #93c5fd55}.station:disabled{opacity:.38;cursor:not-allowed;filter:grayscale(.8)}
+.planet{font-size:51px;display:block;animation:float 3s ease-in-out infinite}.label{display:block;margin-top:6px}.value{display:inline-block;margin-top:8px;padding:5px 12px;border-radius:999px;background:#fde68a;color:#3b2500;font-size:15px;font-weight:900}@keyframes float{50%{transform:translateY(-6px)}}
+.questionBox{margin-top:16px}.qPlanet{font-size:76px}.qtitle{font-size:23px;font-weight:900}.level{display:inline-block;margin:8px;padding:6px 13px;border-radius:999px;background:#fbbf2428;color:#fde68a;font-weight:900}
+.q{font-size:20px;font-weight:800;line-height:1.8;max-width:760px;margin:12px auto 18px}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.ans{min-height:62px;border-radius:16px;border:1px solid #ffffff40;background:#ffffff12;color:#fff;padding:12px;font-size:17px;font-weight:800;cursor:pointer}.ans:hover{background:#ffffff20}
+.correct{background:#16a34a!important;border-color:#86efac!important;box-shadow:0 0 26px #22c55e99}.wrong{background:#dc2626!important;border-color:#fca5a5!important;box-shadow:0 0 24px #ef444488}
+.feedback{min-height:38px;padding-top:14px;font-size:18px;font-weight:900}.next,.restart{min-height:48px;border:0;border-radius:15px;padding:11px 24px;font-weight:900;font-size:16px;cursor:pointer;margin-top:9px}
+.next{background:linear-gradient(90deg,#fbbf24,#f97316);color:#291300}.restart{background:#ffffff1f;color:#fff;border:1px solid #fff}.hidden{display:none!important}
+.winner{position:relative;overflow:hidden;margin-top:16px;background:radial-gradient(circle,#4a2775,#0a1230 60%,#030612);border:2px solid #fde68a}.winnerIcon{font-size:85px}.winner h2{color:#fde68a;font-size:32px}.winnerText{font-size:23px;font-weight:900}.launch{font-size:82px;display:inline-block;animation:launch 1.15s ease-in-out infinite alternate;filter:drop-shadow(0 0 15px #fff)}@keyframes launch{from{transform:translate(-45px,24px) rotate(-35deg)}to{transform:translate(55px,-34px) rotate(-35deg)}}.ranking{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:8px;margin-top:15px}.rankCard{background:#ffffff10;border:1px solid #ffffff32;border-radius:15px;padding:10px}.rankCard b{color:#fde68a}
+.piece{position:absolute;top:-25px;width:10px;height:18px;animation:fall 2.8s linear forwards}@keyframes fall{to{transform:translateY(520px) rotate(720deg);opacity:.8}}
+.footer{text-align:center;color:#94a3b8;font-size:12px;margin-top:18px}
+@media(max-width:650px){.space{padding:10px}.teams,.stations{gap:4px}.team{padding:7px 2px}.obj{font-size:24px}.nm{font-size:9px}.station{min-height:115px;padding:7px 2px}.planet{font-size:36px}.label{font-size:10px}.answers{grid-template-columns:1fr}.q{font-size:17px}.icons{font-size:28px}}
+@media(prefers-reduced-motion:reduce){.stars,.planet,.piece{animation:none}}
+</style>
+</head>
+<body>
+<div class="space"><div class="stars"></div><main class="wrap">
+<header class="hero"><div class="icons">🚀 ✨ 🌌 🛰️ 🪐</div><h1>رحلة إلى مجرّة نصف القطر الذري</h1><div class="sub">مسابقة ختامية تفاعلية بمناسبة أسبوع الفضاء</div><div class="sub">اختاري محطتكِ حسب قيمة النقاط… واكتشفي السؤال بعد الوصول! 🔭</div></header>
+
+<div class="teams">
+<div class="team yellow"><span class="obj">☀️</span><span class="nm">الفريق ١<br>الشمس</span><span class="sc">0 نقطة</span></div>
+<div class="team blue"><span class="obj">🌍</span><span class="nm">الفريق ٢<br>الأرض</span><span class="sc">0 نقطة</span></div>
+<div class="team green"><span class="obj">🛰️</span><span class="nm">الفريق ٣<br>القمر الصناعي</span><span class="sc">0 نقطة</span></div>
+<div class="team purple"><span class="obj">🪐</span><span class="nm">الفريق ٤<br>زحل</span><span class="sc">0 نقطة</span></div>
+<div class="team red"><span class="obj">🚀</span><span class="nm">الفريق ٥<br>الصاروخ</span><span class="sc">0 نقطة</span></div>
+</div>
+
+<section id="chooser" class="panel">
+<div id="turnText" class="turnText"></div>
+<div class="hint">🧑‍🚀 يختار الفريق محطة واحدة فقط — قيمة السؤال ظاهرة، ومستوى التفكير مخفي</div>
+<div id="stations" class="stations"></div>
+</section>
+
+<section id="questionBox" class="panel questionBox hidden">
+<div id="qPlanet" class="qPlanet"></div><div id="qtitle" class="qtitle"></div><div id="level" class="level hidden"></div>
+<div id="q" class="q"></div><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div>
+<button id="continue" class="next hidden">العودة إلى خريطة المجرة 🚀</button>
+</section>
+
+<section id="winner" class="panel winner hidden">
+<div id="confetti"></div><div class="launch">🚀💨</div><h2>اكتملت الرحلة الفضائية!</h2>
+<div id="winnerText" class="winnerText"></div><div id="ranking" class="ranking"></div><p>🌟 أبدعتن في استكشاف تدرّج نصف القطر الذري 🌟</p>
+<button id="restart" class="restart">إعادة الرحلة 🔄</button>
+</section>
+<div class="footer">درس تدرج نصف القطر الذري • أسبوع الفضاء</div>
+</main></div>
+
+<script>
+const teams=['الفريق ١ — الشمس ☀️','الفريق ٢ — الأرض 🌍','الفريق ٣ — القمر الصناعي 🛰️','الفريق ٤ — زحل 🪐','الفريق ٥ — الصاروخ 🚀'];
+const stations=[
+ {icon:'🌕',name:'محطة القمر',points:5,q:'ما الاتجاه العام لنصف القطر الذري عند الانتقال عبر الدورة من اليسار إلى اليمين؟',a:['يزداد','يقل','يبقى ثابتًا'],c:1},
+ {icon:'🌍',name:'محطة الأرض',points:10,q:'لماذا يزداد نصف القطر الذري عند الانتقال من أعلى المجموعة إلى أسفلها؟',a:['لزيادة عدد مستويات الطاقة','لنقص عدد البروتونات','لثبات عدد مستويات الطاقة'],c:0},
+ {icon:'🔴',name:'محطة المريخ',points:20,q:'قارني بين عنصري الألومنيوم Al والبورون B. أيهما أكبر في نصف القطر الذري؟',a:['الألومنيوم Al','البورون B','متساويان في نصف القطر'],c:0},
+ {icon:'🪐',name:'محطة زحل',points:30,q:'العنصران Na و Mg يقعان في الدورة الثالثة. إذا كان Na أكبر نصف قطرًا، فما التفسير الأدق؟',a:['Mg لديه مستويات طاقة أكثر','الشحنة النووية الفعالة تزداد باتجاه Mg فتجذب الإلكترونات أكثر','Na يحتوي بروتونات أكثر'],c:1},
+ {icon:'☄️',name:'محطة المذنب',points:40,q:'قارني بين ذرة الأكسجين O وأيون الأكسجين O²⁻. أيهما أكبر في نصف القطر؟',a:['ذرة الأكسجين O','أيون الأكسجين O²⁻','متساويان في نصف القطر'],c:1},
+ {icon:'🌌',name:'محطة المجرة',points:50,q:'الأيونات Ca²⁺ و K⁺ و Cl⁻ متساوية في عدد الإلكترونات. ما ترتيبها من الأصغر إلى الأكبر في نصف القطر؟',a:['Ca²⁺ < K⁺ < Cl⁻','Cl⁻ < K⁺ < Ca²⁺','K⁺ < Ca²⁺ < Cl⁻'],c:0}
+];
+let turn=0,used=[false,false,false,false,false,false],scores=[0,0,0,0,0],selected=-1,locked=false;
+const $=s=>document.querySelector(s);
+function renderChooser(){
+ document.querySelectorAll('.team').forEach((x,k)=>x.classList.toggle('turn',k===turn));
+ $('#turnText').textContent='🚀 دور '+teams[turn]+' — اختاري محطتكِ الفضائية';
+ $('#stations').innerHTML='';
+ stations.forEach((s,k)=>{
+  const b=document.createElement('button'); b.className='station'; b.disabled=used[k];
+  b.innerHTML='<span class="planet">'+s.icon+'</span><span class="label">'+s.name+'</span><span class="value">'+s.points+' نقطة</span><span class="label">'+(used[k]?'تم الاستكشاف ✓':'اختاري هذه المحطة')+'</span>';
+  b.onclick=()=>openStation(k); $('#stations').appendChild(b);
+ });
+}
+function openStation(k){
+ selected=k;used[k]=true;locked=false;const s=stations[k];
+ $('#chooser').classList.add('hidden');$('#questionBox').classList.remove('hidden');
+ $('#qPlanet').textContent=s.icon;$('#qtitle').textContent=s.name+' — '+s.points+' نقطة';$('#q').textContent=s.q;$('#feedback').textContent='';$('#continue').classList.add('hidden');$('#answers').innerHTML='';
+ s.a.forEach((a,j)=>{const b=document.createElement('button');b.className='ans';b.textContent=a;b.onclick=()=>answer(b,j);$('#answers').appendChild(b)});
+}
+function answer(b,j){
+ if(locked)return;locked=true;const s=stations[selected],bs=[...document.querySelectorAll('.ans')];
+ if(j===s.c){b.classList.add('correct');scores[turn]=s.points;$('#feedback').textContent='🟢 إجابة صحيحة! +'+s.points+' نقطة 🚀👏';clap();}
+ else{b.classList.add('wrong');bs[s.c].classList.add('correct');$('#feedback').textContent='🔴 إجابة غير صحيحة — ظهرت الإجابة الصحيحة باللون الأخضر.'}
+ document.querySelectorAll('.sc')[turn].textContent=scores[turn] ? scores[turn]+' نقطة' : '0 نقطة';
+ $('#continue').textContent=turn===4?'🏆 إعلان الفريق الفائز':'🚀 العودة إلى خريطة المجرة';$('#continue').classList.remove('hidden');
+}
+$('#continue').onclick=()=>{if(turn===4)finish();else{turn++;$('#questionBox').classList.add('hidden');$('#chooser').classList.remove('hidden');renderChooser();}};
+function finish(){
+ $('#questionBox').classList.add('hidden');$('#winner').classList.remove('hidden');document.querySelectorAll('.team').forEach(x=>x.classList.remove('turn'));
+ const mx=Math.max(...scores),w=scores.map((v,k)=>v===mx?k:-1).filter(k=>k>=0);
+ $('#winnerText').innerHTML=mx===0?'🚀 تحتاج الفرق إلى رحلة استكشاف جديدة!':w.length===1?'🏆 انطلق بسرعة الصاروخ نحو الصدارة!<br>'+teams[w[0]]+' — '+mx+' نقطة':'🚀 انطلاق مشترك نحو الصدارة!<br>'+w.map(k=>teams[k]).join(' • ')+' — '+mx+' نقطة';
+ const rows=teams.map((name,k)=>({name,score:scores[k]})).sort((a,b)=>b.score-a.score);
+ const unique=[...new Set(rows.map(r=>r.score))].sort((a,b)=>b-a);
+ $('#ranking').innerHTML=rows.map(r=>{const p=unique.indexOf(r.score)+1,m=p===1?'🥇':p===2?'🥈':p===3?'🥉':'⭐';return '<div class="rankCard">'+m+' المركز '+p+'<br>'+r.name+'<br><b>'+r.score+' نقطة</b></div>'}).join('');
+ confetti();clap();
+}
+function confetti(){const c=$('#confetti');c.innerHTML='';const colors=['#fde047','#3b82f6','#22c55e','#a855f7','#ef4444','#fff'];for(let n=0;n<100;n++){const p=document.createElement('i');p.className='piece';p.style.left=Math.random()*100+'%';p.style.background=colors[n%colors.length];p.style.animationDelay=Math.random()*.8+'s';c.appendChild(p)}}
+function clap(){try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;const a=new A();for(let n=0;n<12;n++){const o=a.createOscillator(),g=a.createGain();o.type='triangle';o.frequency.value=230+Math.random()*700;g.gain.setValueAtTime(.04,a.currentTime+n*.055);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+n*.055+.075);o.connect(g);g.connect(a.destination);o.start(a.currentTime+n*.055);o.stop(a.currentTime+n*.055+.08)}}catch(e){}}
+$('#restart').onclick=()=>{turn=0;used=[false,false,false,false,false,false];scores=[0,0,0,0,0];selected=-1;document.querySelectorAll('.sc').forEach(x=>x.textContent='0 نقطة');$('#winner').classList.add('hidden');$('#questionBox').classList.add('hidden');$('#chooser').classList.remove('hidden');renderChooser();};
+renderChooser();
+</script>
+</body></html>
